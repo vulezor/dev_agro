@@ -14,6 +14,7 @@ class Client_Api extends Controller{
             header('location: '.URL);
             die;
         }*/
+       
     }
 
     public function get_clients($id=null){

@@ -106,6 +106,10 @@ _raiffisenApp.factory('interceptor', function($q){
                     templateUrl:'app/view/pregled_kupac_dobavljac/pregled_kupac_repromaterijal.html',
                     controller: 'kupacRepromaterijalController'
                 })
+                .when('/pregled_kupac_dobavljac/pregled_prodavac_merkantila', {
+                    templateUrl:'app/view/pregled_kupac_dobavljac/pregled_prodavac_merkantila.html',
+                    controller: 'kupacMerkantilaController'
+                })
                 .otherwise({
                     redirectTo:'/',
                     templateUrl:'app/view/dashboard.html',

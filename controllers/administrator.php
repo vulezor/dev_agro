@@ -93,6 +93,7 @@ class Administrator extends Controller{
             'app/controllers/stanjeRepromaterijalController.js',
             'app/controllers/dispozicijeController.js',
             'app/controllers/kupacRepromaterijalController.js',
+            'app/controllers/kupacMerkantilaController.js',
         );
 
         //filters Module

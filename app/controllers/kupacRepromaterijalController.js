@@ -51,7 +51,7 @@
                     $scope.category_menu_items = msg;
                     $scope.client_results = [];
                     $('.for_kupca').css( "visibility", "hidden");
-                    $scope.hide();
+                    //$scope.hide();
                 } else {
                     window.location.href = mainService.domainURL();//logout
                 }

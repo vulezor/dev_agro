@@ -9,7 +9,7 @@
 			},
 			controller:function($scope){
 				$scope.hide_kupac =false;
-				$scope.trazi_k upca = '';
+				$scope.trazi_kupca = '';
 				$scope.unhide = function(){
 					$scope.hide_kupac = !$scope.hide_kupac;
 				}
