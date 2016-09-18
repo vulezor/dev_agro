@@ -7,7 +7,7 @@
                 if(!ngModelCtrl) {
                     return;
                 }
-
+                $(element).css('text-align', 'right');
                 ngModelCtrl.$parsers.push(function(val) {
                     if (angular.isUndefined(val)) {
                         var val = '';

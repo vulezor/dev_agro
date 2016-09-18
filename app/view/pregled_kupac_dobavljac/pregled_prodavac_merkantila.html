@@ -1,6 +1,43 @@
 <style>
+	.myModal{
+		width:100%;height:100%;position:absolute;top:0%;left:0%;background-color:rgba(0,0,0,0.6);z-index: 3000;
+	}
+
+	/* when hiding the picture */
+.myModal.ng-hide-add         { animation:0.5s lightSpeedOut ease; }
+
+/* when showing the picture */
+.myModal.ng-hide-remove      { animation:0.5s flipInX ease; }
+
+/* ANIMATIONS (FROM ANIMATE.CSS) ======================== */
+/* flip in */
+@keyframes flipInX {
+  0% { 
+     opacity: 0;
+  }
+  1% { 
+     opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* light speed out */
+@keyframes lightSpeedOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
 
 </style>
+<!-- Small modal
+<button ng-click="myModal=!myModal">Small modal</button> <!-- type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm" -->
+
 <div class="page_wrapper" data-ng-class="{'blur': show_dispozicija===true}">
 
     <article class="page_header cf" >
@@ -9,9 +46,169 @@
             <i class="fa fa-street-view fa-lg"></i></i>
             Prodavac/Pregled merkantile  </h1>
        </div>
-        <div class="smart-form" style="position:relative;z-index:100">
-            <autocomplete-clients klijenti="kupci" callback="odabirkupca"></autocomplete-clients>
-        </div>
     </article>
-    
+
+<div class="row">
+	<div class="col-sm-3">
+		<div class="jarviswidget jarviswidget-sortable" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false" role="widget">
+		<header role="heading" style="background-color:#6b7652;color:#fff">
+			<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+			<h2>Odabir informacija za obradu </h2>				
+			
+		<span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span></header>
+		<!-- widget div-->
+		<div role="content">
+			<!-- widget content -->
+			<div class="widget-body no-padding">
+				<!--<pre>{{form_data}}</pre>-->
+				<form action="" id="checkout-form" class="smart-form" novalidate="novalidate">
+					<fieldset>
+						<div>
+							<section>
+    							<autocomplete-clients klijenti="clients" callback="getGoodTypeId"></autocomplete-clients>
+							</section>
+							</div>
+							<div>
+							<section >
+								<label class="select"> 
+									<select data-ng-model="form_data.good_type_id"  data-ng-options="item.id as item.name | capitalize for item in goods_types" data-ng-change="getGoodId()">
+									<option value="">-----------Izaberi tip merkantile -----------</option>
+									</select>
+									<i></i>
+								</label>
+							</section>
+							</div>
+							<div>
+							<section>
+								<label class="select"> 
+									<select data-ng-model="form_data.good_id"  data-ng-options="item.id as item.name | capitalize for item in goods">
+									<option value="">-----------Izaberi proizvod -----------</option>
+									</select>
+									<i></i>
+								</label>
+							</section>
+						</div>
+
+						
+					</fieldset>
+
+					<footer>
+						<button type="button" class="btn btn-primary" data-ng-click="get_sum_srps()">
+							Potvrdi
+						</button>
+					</footer>
+				</form>
+			</div>
+			<!-- end widget content -->
+		</div>
+		<!-- end widget div -->
+	</div>
+
+	</div>
+
+	<div class="col-sm-9">
+		<div class="jarviswidget jarviswidget-sortable" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false" role="widget" >
+		<header role="heading"  style="background-color:#6b7652;color:#fff">
+			<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+			<h2 ng-if="client_start_data.length > '0'">Ukupna prodaja i lager za klijenta {{client_start_data[0].firm_name}} za kulturu {{client_start_data[0].goods_name}}</h2>	
+		</header>
+		<!-- widget div-->
+		<div role="content">
+			<!-- widget content -->
+			<div class="widget-body no-padding">
+				<div class="table-responsive">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>Datum</th>
+								<th>Stanje robe</th>
+								<th>Prodao</th>
+								<th>Izneo</th>
+								<th>Obracunat lager</th>
+								<th>Procenat obracuna</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-if="client_start_data.length > '0'">
+								<td>{{ danas() }}</td>
+								<td align="right">{{client_start_data[0].srps}} Kg</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td>
+									<!-- Single button -->
+									<div class="btn-group " style="position:absolute;margin-top:-3px">
+									
+									  <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									    Action <span class="caret"></span>
+									  </button>
+									  <ul class="dropdown-menu dropdown-menu-right" >
+									    <li><a href="javascript:void(0)" data-ng-click="hideShowModal('lager')">Lager</a></li>
+									    <li><a href="javascript:void(0)" data-ng-click="hideShowModal('prodaja')">Prodaja</a></li>
+									    <li><a href="javascript:void(0)" data-ng-click="hideShowModal('izlaz')">Izlaz</a></li>
+									    <!--<li><a href="javascript:void(0)" data-ng-click="hideShowModal('ulaz')">Ulaz</a></li>-->
+									    <!--<li role="separator" class="divider"></li>
+									    <li><a href="#">Separated link</a></li>-->
+									  </ul>
+									  
+									</div>
+								</td>
+							</tr>
+
+							<tr ng-if="client_start_data.length == '0'">
+								<td colspan="7" align="center"><i>Nema odabranog prodavca robe</i></td>
+							</tr>
+						</tbody>
+					</table>		
+				</div>
+			</div>
+			<!-- end widget content -->
+		</div>
+		<!-- end widget div -->
+	</div>
+	</div>
 </div>
+
+{{client_start_data|json}}
+
+
+
+
+<!-- myModal directive -->
+ <my-modal ng-show="myModal" title="{{sellType}}" modal-size="modal-sm" on-cancel="hideShowModal()" cancel-title="Odustani" >
+        <div class="smart-form">
+        <form name="sellForm">
+        	<!-- Kolicina -->
+			<field-type f-type="input" ng-class="{ 'has-error': sellForm.kolicina.$touched && sellForm.kolicina.$invalid}">
+			    <i class="icon-prepend for_infobox  fa fa-bar-chart"  data-boxinfo="Kolicina robe"></i>
+				<input 
+					type="text" 
+					class="input-sm" 
+					name="kolicina" 
+					placeholder="Kolicina robe" 
+					is-number  
+					data-ng-model="lager_data.kolicina" 
+        			required />
+					<div class="help-block" ng-messages="sellForm.kolicina.$error" ng-if="sellForm.kolicina.$touched">
+				        <p ng-message="required">Polje za količinu je obavezno</p>
+			      </div>
+			</field-type><!-- /Kolicina -->
+			<!-- Datum -->
+			<field-type f-type="input"  >
+			    <i class="icon-prepend for_infobox  fa fa-calendar"  data-boxinfo="Kolicina robe"></i>
+				<input type="text" class="input-sm" name="datum" readonly placeholder="Kolicina robe" is-datepicker yearRange="2016:2016"  data-ng-model="lager_data.datum" >
+			</field-type><!-- Datum -->
+			<!-- Procenat -->
+			<field-type f-type="input" ng-if="sellType!='prodaja'">
+			    <i class="icon-prepend for_infobox  fa fa-percent"  data-boxinfo="Procenat odbitka"></i>
+				<input type="text" class="input-sm" name="datum" placeholder="Procenat odbitka" is-number data-ng-model="lager_data.procenat" >
+			</field-type><!-- Procenat -->
+			</form>
+        </div>
+    <!-- myModalFooter directive like slot dependency-->
+	<my-modal-footer>
+		<button type="button" class="btn btn-primary" ng-click="potvrda_obracuna()">Potvrdi</button>
+	</my-modal-footer><!-- myModalFooter directive -->
+</my-modal><!-- myModal directive -->

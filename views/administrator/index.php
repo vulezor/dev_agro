@@ -74,7 +74,7 @@
             <li>
                 <a href="" data-ng-disabled="true"  data-ng-class="menuClass(['pregled_kupac_dobavljac/pregled_kupac_merkantila','pregled_kupac_dobavljac/pregled_kupac_repromaterijal'])"><i class="fa fa-street-view fa-lg"></i> <span>Kupac/Dobavljac</span></a>
                 <ul class="submenu">
-                    <li><a href="#/pregled_kupac_dobavljac/pregled_kupac_merkantila"><span>Merkantila</span></a></li>
+                    <li><a href="#/pregled_kupac_dobavljac/pregled_prodavac_merkantila"><span>Merkantila</span></a></li>
                     <li><a href="#/pregled_kupac_dobavljac/pregled_kupac_repromaterijal"><span>Repromaterijal</span></a></li>
                 </ul>
             </li>

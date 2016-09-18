@@ -22,7 +22,6 @@
 		            }, 200);
 		        };
 		        $scope.odabirKupca = function(index){
-		        	console.log(index)
 		        	$scope.odabrani_firm_name = $scope.klijenti[index].firm_name;
 		        	$scope.callback()(index);
 		        }

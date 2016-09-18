@@ -10,6 +10,7 @@ _raiffisenApp.factory('interceptor', function($q){
             return request;
         },
         response:function(response){
+            console.log('RESPONSE', response)
             console.log('response is done');
             return response;
         },

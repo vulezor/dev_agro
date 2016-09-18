@@ -62,6 +62,8 @@ class Administrator extends Controller{
             'node_modules/angular-datatables/dist/plugins/buttons/dataTables.buttons.js',
             'node_modules/angular-datatables/dist/plugins/buttons/angular-datatables.buttons.js',
             'node_modules/angular-datatables/dist/plugins/responsive/dataTables.responsive.js',
+            'node_modules/bootstrap/js/modal.js',
+            'node_modules/bootstrap/js/dropdown.js',
 
 
 
@@ -98,7 +100,8 @@ class Administrator extends Controller{
 
         //filters Module
         $this->view->component_module = array(
-            'app/components/autocompleteClients.js'
+            'app/components/autocompleteClients.js',
+            'app/components/field-type.js'
         );
 
         //Directives Module
@@ -108,6 +111,8 @@ class Administrator extends Controller{
             'app/directives/form_directive.js',
             'app/directives/smart_form_directive.js',
             'app/directives/fileModel.js',
+            'app/directives/myModal.js',
+            'app/directives/is-datepicker.js',
         );
 
         //Services/Factories Module
