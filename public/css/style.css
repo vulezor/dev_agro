@@ -1749,14 +1749,18 @@
         /*border:1px solid black;*/
     }
     .search_kupac_con{
-        border:1px solid #ccc;
+        /*border:1px solid #ccc;*/
         position:absolute;
-        width:270px;
-        margin:45px 15px 0px 15px;
+        width:100%;
+        margin:-15px 0px 0px 0px;
         background-color: #fff;/*#eaeaea;*/
+        -webkit-box-shadow: 0px 3px 17px -2px rgba(0,0,0,0.75);
+        -moz-box-shadow: 0px 3px 17px -2px rgba(0,0,0,0.75);
+        box-shadow: 0px 3px 17px -2px rgba(0,0,0,0.75);
     }
+
     .kupac_list{
-        width:88%;overflow-x:hidden;overflow-y:auto;margin:0px 15px 15px 15px;height:200px;background:#FFFFFF;border:1px solid #ccc;
+        width:auto;overflow-x:hidden;overflow-y:auto;margin:15px;height:200px;background:#FFFFFF;border:1px solid #ccc;
     }
     .kupac_list ul li{
         font-size:12px;
@@ -1876,6 +1880,33 @@
     .client-goods .client_result div:last-of-type{
         border-right:1px solid #ccc;
     }
+    .has-error input, .has-error select{
+        border:1px solid red;
+    }
+    .has-error i::before {
+        color:red;
+    }
+    .has-error p{
+        background-color:red;
+        color:#fff;
+        font-size:12px;
+        padding:2px 4px;
+        position:absolute;
+        z-index:2500;
+        margin-top:-4px;
+    }
+    .has-error p::before{
+        content: "\f0d8";
+        font-family: FontAwesome;
+        color:red;
+        position:absolute;
+
+        top:0px;
+        font-size:28px;
+        margin-top:-18px;
+        margin-left:5px;
+    }
+    
 }
 
 @media print
