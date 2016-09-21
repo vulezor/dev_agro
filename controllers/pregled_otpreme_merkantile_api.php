@@ -3,6 +3,8 @@ class Pregled_Otpreme_Merkantile_Api extends Controller{
     public function __construct(){
         parent::__construct();
         $this->_proracun = new Proracun();
+
+        error_reporting(0);
     }
 
     public function empty_load(){
@@ -1424,6 +1426,7 @@ class Pregled_Otpreme_Merkantile_Api extends Controller{
     public function otprema_merkantila(){
         Ajax::ajaxCheck();
         $data = json_decode(file_get_contents("php://input"));//take data from json object
+        //print_r($data);die;
         header('Content-Type: application/json');
         $check_session = $this->check_logedIn_admin(); //checking if session exists
         if( $check_session['login'] == 1){
@@ -1465,13 +1468,23 @@ class Pregled_Otpreme_Merkantile_Api extends Controller{
             //print_r($goods_parametars);
             $this->model->set_values('output_merkantila', $goods_parametars);
             $goods_type = strtolower($data->goods_type);
+            $goods_name = $data->good_name;
             isset($data->goods_type) ? $goods_parametars["goods_type"]=$goods_type : null ;
+
+             //var_dump($goods_type=="soja" && $goods_name!="Soja Tel-kel");die;
+            if($goods_type=="soja" && $goods_name!="Soja Tel-kel"){
+                //print_r('bez');
+                $this->obracun_soje($goods_parametars);
+            }
+            if($goods_type=="soja" && $goods_name=="Soja Tel-kel"){
+               // print_r('sa');
+                $this->bez_obracuna($goods_parametars);
+            }
+
             if( $goods_type==='kukuruz'){
                 $this->obracun_kukuruza($goods_parametars);
             } else if($goods_type==='suncokret'){
                 $this->obracun_suncokreta($goods_parametars);
-            }else if($goods_type==='soja'){
-                $this->obracun_soje($goods_parametars);
             }else if($goods_type==='uljana repica'){
                 $this->obracun_uljane_repice($goods_parametars);
             } else if($goods_type==='psenica'){
@@ -1485,6 +1498,7 @@ class Pregled_Otpreme_Merkantile_Api extends Controller{
             }else if($goods_type==='psenica tel-kel'){
                 $this->bez_obracuna($goods_parametars);
             }
+
 
         } else {
             echo json_encode(array('logedIn'=>0), JSON_NUMERIC_CHECK);
@@ -1528,7 +1542,7 @@ class Pregled_Otpreme_Merkantile_Api extends Controller{
         $bonifikacija = $this->model->get_values($sql, $id=null);
         return $bonifikacija[0];
     }
-    //-----------------------------------------------------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------------------------------------------------SS---
 
     private function bez_obracuna($result){
         $data_set = array(

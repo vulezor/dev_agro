@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <?php
-/*if($_SERVER["HTTPS"] != "on") {
+if($_SERVER["HTTPS"] != "on") {
    header("HTTP/1.1 301 Moved Permanently");
    header("Location: https://" . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"]);
    exit();
-}*/
+}
 ?>
 <html lang="en" data-ng-app="_raiffisenApp" winresize>
 <head>

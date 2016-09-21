@@ -596,7 +596,7 @@
     /************************************************* IZLAZ MERKANTILA CONTROLLER *************************************************************************************************************/
 
     var otpremaMerkantilaController = function($scope, $filter, otpremaMerkantilaPregledFactory, mainService, clientsFactory, errorService){
-        $scope.insert_data = {};
+        $scope.insert_data = {good_name:''};
         $scope.wearehouses = [];
         $scope.goods_type = [];
         $scope.culture = {
@@ -794,7 +794,8 @@
             }
 
             //--------------------------------------------------------------------------------------------------------------
-
+            $scope.insert_data.good_name = $("select[name='goods_id1'] option:selected").text();
+            //console.log($scope.insert_data);return false;
             //console.log($scope.insert_data);
             $('.ajax_load_visibility').css('visibility','visible');
             otpremaMerkantilaPregledFactory.insertMerkantila($scope.insert_data).success(function(msg){//testSession
@@ -802,7 +803,9 @@
                 console.log(msg);
                 if(msg.logedIn !== 0 && msg.hasOwnProperty('logedIn')===false){
                     console.log('logedin');
-                    $scope.insert_data ={};
+                    $scope.insert_data ={
+                        good_name:''
+                    };
                     $scope.insert_data.session_id = $scope.session_id;
                     $scope.selectLastMeasurement();
                     console.log($scope.session_id);

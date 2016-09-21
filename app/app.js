@@ -23,7 +23,7 @@ _raiffisenApp.factory('interceptor', function($q){
 (function(){
     angular.module('_raiffisenApp')
         .config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider){
-            $httpProvider.interceptors.push('interceptor')
+            //$httpProvider.interceptors.push('interceptor')
             $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
             $routeProvider
                 .when('/open_warehouses', {

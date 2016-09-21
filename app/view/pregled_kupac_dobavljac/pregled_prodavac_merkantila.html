@@ -107,6 +107,7 @@
 	</div>
 
 	<div class="col-sm-9">
+	
 		<div class="jarviswidget jarviswidget-sortable" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false" role="widget" >
 		<header role="heading"  style="background-color:#6b7652;color:#fff">
 			<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
@@ -124,15 +125,31 @@
 								<th>Stanje robe</th>
 								<th>Prodao</th>
 								<th>Izneo</th>
-								<th>Obracunat lager</th>
+								<th>Obracun izlaza</th>
+								<th>Obracun lagera</th>
 								<th>Procenat obracuna</th>
 								<th>Action</th>
 							</tr>
 						</thead>
 						<tbody>
+						<tr ng-repeat="(index, deo) in kolicina">
+							<td>{{ deo.datum | date:'dd.MM.yyyy' }}</td>
+								<td align="right" >
+									
+									{{   deo.obracun  }}
+									Kg
+								</td>
+								<td align="right">{{deo.sold}} <span ng-if="deo.sold">Kg</span></td>
+								<td align="right">{{deo.out_good}} <span ng-if="deo.out">Kg</span></td>
+								<td align="right">{{deo.out_quantity}} <span ng-if="deo.out_quantity">Kg</span></td>
+								<td align="right">{{deo.stock_quantity}}  <span ng-if="deo.stock_quantity">Kg</span></td>
+								<td align="right">{{ fixed(deo.stock) }} <span ng-if="deo.stock">%</span></td>
+								<td></td>
+						</tr>
 							<tr ng-if="client_start_data.length > '0'">
 								<td>{{ danas() }}</td>
-								<td align="right">{{client_start_data[0].srps}} Kg</td>
+								<td align="right">{{_sumkolicina }}Kg</td>
+								<td></td>
 								<td></td>
 								<td></td>
 								<td></td>
@@ -158,7 +175,7 @@
 							</tr>
 
 							<tr ng-if="client_start_data.length == '0'">
-								<td colspan="7" align="center"><i>Nema odabranog prodavca robe</i></td>
+								<td colspan="8" align="center"><i>Nema odabranog prodavca robe</i></td>
 							</tr>
 						</tbody>
 					</table>		
@@ -171,17 +188,17 @@
 	</div>
 </div>
 
-{{client_start_data|json}}
+<!--{{client_start_data|json}}
 
-
+{{form_data|json}}-->
 
 
 <!-- myModal directive -->
- <my-modal ng-show="myModal" title="{{sellType}}" modal-size="modal-sm" on-cancel="hideShowModal()" cancel-title="Odustani" >
+ <my-modal ng-show="myModal" title="{{sellType}}" modal-size="modal-sm"  >
+       <form name="sellForm" novalidate="novalidate">
         <div class="smart-form">
-        <form name="sellForm">
         	<!-- Kolicina -->
-			<field-type f-type="input" ng-class="{ 'has-error': sellForm.kolicina.$touched && sellForm.kolicina.$invalid}">
+			<field-type f-type="input" ng-if="sellType!=='lager'" ng-class="{ 'has-error': (sellForm.kolicina.$touched || submitted) && sellForm.kolicina.$invalid}">
 			    <i class="icon-prepend for_infobox  fa fa-bar-chart"  data-boxinfo="Kolicina robe"></i>
 				<input 
 					type="text" 
@@ -191,24 +208,40 @@
 					is-number  
 					data-ng-model="lager_data.kolicina" 
         			required />
-					<div class="help-block" ng-messages="sellForm.kolicina.$error" ng-if="sellForm.kolicina.$touched">
-				        <p ng-message="required">Polje za količinu je obavezno</p>
+					<div class="help-block" ng-messages="sellForm.kolicina.$error" ng-if="sellForm.kolicina.$touched || submitted">
+				        <span ng-message="required">Polje za količinu je obavezno</span>
 			      </div>
 			</field-type><!-- /Kolicina -->
 			<!-- Datum -->
-			<field-type f-type="input"  >
-			    <i class="icon-prepend for_infobox  fa fa-calendar"  data-boxinfo="Kolicina robe"></i>
-				<input type="text" class="input-sm" name="datum" readonly placeholder="Kolicina robe" is-datepicker yearRange="2016:2016"  data-ng-model="lager_data.datum" >
+			<field-type f-type="input" ng-class="{ 'has-error': (sellForm.datum.$touched || submitted) && sellForm.datum.$invalid}" >
+			    <i class="icon-prepend for_infobox  fa fa-calendar"  data-boxinfo="Datum"></i>
+				<input 
+					type="text" 
+					class="input-sm" 
+					name="datum" 
+					readonly 
+					placeholder="Datum" 
+					is-datepicker 
+					yearRange="2016:2016"  
+					data-ng-model="lager_data.datum" 
+					required
+				/>
+				<div class="help-block" ng-messages="sellForm.datum.$error" ng-if="sellForm.datum.$touched || submitted">
+				        <span ng-message="required">Polje za datum je obavezno</span>
+			    </div>
 			</field-type><!-- Datum -->
 			<!-- Procenat -->
 			<field-type f-type="input" ng-if="sellType!='prodaja'">
 			    <i class="icon-prepend for_infobox  fa fa-percent"  data-boxinfo="Procenat odbitka"></i>
-				<input type="text" class="input-sm" name="datum" placeholder="Procenat odbitka" is-number data-ng-model="lager_data.procenat" >
+				<input type="text" class="input-sm" name="procenat" placeholder="Procenat odbitka" is-number data-ng-model="lager_data.procenat" >
 			</field-type><!-- Procenat -->
-			</form>
+			
         </div>
+     
     <!-- myModalFooter directive like slot dependency-->
-	<my-modal-footer>
-		<button type="button" class="btn btn-primary" ng-click="potvrda_obracuna()">Potvrdi</button>
+	<my-modal-footer on-cancel="hideModal(sellForm)" cancel-title="Odustani">
+		<button type="button" class="btn btn-primary"  ng-click="potvrda_obracuna(sellForm)">Potvrdi</button>
+		<!--<button type="button" class="btn btn-primary" ng-click="resetForm(sellForm)">Reset</button>-->
 	</my-modal-footer><!-- myModalFooter directive -->
+	</form>
 </my-modal><!-- myModal directive -->

@@ -581,7 +581,7 @@
         </div>
     </div>
 
-    <div class="one-half push-right" data-ng-show="ifKukuruz || ifZitarice || ifZitarice">
+    <div class="one-half push-right" >
         <div class="cf">
             <div class="one-half push-left"><b>Vlaga:</b></div>
             <div class="one-half push-right text-right right-padding" >{{ last_measurement.vlaga}} % <i class="fa fa fa-flask fa-fw"></i></div>
@@ -628,12 +628,12 @@
     <div class="one-squer push-left text-right">{{ last_measurement.kalo_rastur }} kg <i class="fa fa-arrows-h fa-fw"></i></div>
     <div class="one-squer push-left">&nbsp;</div>
 </div>
-<div class="cf" data-ng-show="ifSacma">
+<div class="cf" data-ng-hide="ifSacma">
     <div class="one-half push-left text-right"><b>Odbitak ili dodatak na vlagu:</b></div>
     <div class="one-squer push-left text-right">{{ last_measurement.dnv }} kg <i class="fa fa-arrows-h fa-fw"></i></div>
     <div class="one-squer push-left">&nbsp;</div>
 </div>
-<div class="cf" data-ng-show="ifSacma">
+<div class="cf" data-ng-hide="ifSacma">
     <div class="one-half push-left text-right"><b>Odbitak ili dodatak na primese:</b></div>
     <div class="one-squer push-left text-right">{{ last_measurement.dnp }} kg <i class="fa fa-arrows-h fa-fw"></i></div>
     <div class="one-squer push-left">&nbsp;</div>

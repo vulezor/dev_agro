@@ -39,9 +39,9 @@
             })
         };
 
-         $scope.sessionCoditioner();
+        /* $scope.sessionCoditioner();
 
-        $interval(function(){ $scope.sessionCoditioner(); }, 60000);
+        $interval(function(){ $scope.sessionCoditioner(); }, 60000);*/
 
         //-------------------------------------------------------------------------------------------
 

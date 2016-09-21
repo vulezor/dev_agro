@@ -1881,31 +1881,35 @@
         border-right:1px solid #ccc;
     }
     .has-error input, .has-error select{
-        border:1px solid red;
+        border:1px solid #990000;
     }
     .has-error i::before {
-        color:red;
+        color:#990000;
     }
-    .has-error p{
-        background-color:red;
+    .help-block{
+        position:absolute;
+        z-index:2500;  
+        margin-top:-1px;
+    }
+    .has-error span{
+        background-color:#990000;
         color:#fff;
         font-size:12px;
         padding:2px 4px;
-        position:absolute;
-        z-index:2500;
-        margin-top:-4px;
+        margin:0px;
+        
     }
-    .has-error p::before{
+    .has-error span::before{
         content: "\f0d8";
         font-family: FontAwesome;
-        color:red;
-        position:absolute;
-
-        top:0px;
+        color:#990000;
         font-size:28px;
-        margin-top:-18px;
         margin-left:5px;
+        position:absolute;
+        margin-top:-16px;
     }
+
+ 
     
 }
 

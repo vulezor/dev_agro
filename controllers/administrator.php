@@ -20,7 +20,7 @@ class Administrator extends Controller{
         $this->view->css = array(
             'public/css/smartadmin-production.min.css',
             'node_modules/bootstrap/dist/css/bootstrap.min.css',
-            'node_modules/font-awesome-4.4.0/css/font-awesome.min.css',
+            'node_modules/font-awesome/css/font-awesome.min.css',
             'public/css/ng_animation.css',
             'public/css/open_sans.css',
             'node_modules/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css',

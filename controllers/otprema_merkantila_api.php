@@ -259,7 +259,7 @@ class Otprema_Merkantila_Api extends Controller
     public function drugo_merenje_merkantila($session_id=null){
         Ajax::ajaxCheck();
         $data = json_decode(file_get_contents("php://input"));
-
+        //print_r($data);die;
         $session_id = $session_id==null ? (string) $data->session_id : (string) $session_id;
         $check_session = $this->check_logedIn($session_id);
         $goods_parametars = array();

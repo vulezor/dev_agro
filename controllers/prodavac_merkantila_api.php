@@ -81,9 +81,56 @@ class Prodavac_Merkantila_Api extends Controller{
 				AND  input_merkantila.goods_id= :good_id';
 		$params = array(':client_id'=>$client_id, ':sort_of_goods_id'=>'1', ':type_of_goods_id'=>$good_type_id, ':good_id'=>$good_id);
 		$result = $this->model->get_values($sql,$params);
+
+		$sql = 'SELECT *, DATE(`date`) AS datum FROM prodaja_lager WHERE clients_id= :client_id AND type_of_good_id= :type_of_goods_id AND good_id= :good_id ORDER BY id';
+		$params = array(':client_id'=>$client_id,  ':type_of_goods_id'=>$good_type_id, ':good_id'=>$good_id);
+		$kolicina = $this->model->get_values($sql,$params);
 		header('Content-Type: application/json');
-        echo json_encode(array('logedIn'=>1, 'data'=>$result));			
+        echo json_encode(array('logedIn'=>1, 'data'=>$result, 'kolicina'=>$kolicina));			
     }
+
+    public function set_obracun(){
+    	$data = json_decode(file_get_contents("php://input")); 
+    	//print_r($data); die;
+    	if($data->sellType === 'lager'){
+    		$arr = array(
+	    		'clients_id' => $data->client_id,
+	    		'stock_quantity'=> (floatval($data->srps_kolicina) * (floatval($data->procenat) / 100)),
+	    		'stock' => floatval($data->procenat),
+	    		'date' => date('Y-m-d', strtotime($data->datum)). ' ' . '00:00:00',
+	    		'type_of_good_id' => (int) $data->good_type_id,
+	    		'good_id' => (int) $data->good_id
+    		);
+    	}
+    	if($data->sellType === 'prodaja'){
+		    $arr = array(
+	    		'clients_id' => $data->client_id,
+	    		'sold'=> $data->kolicina,
+	    		'date' => date('Y-m-d', strtotime($data->datum)). ' ' . '00:00:00',
+	    		'type_of_good_id' => (int) $data->good_type_id,
+	    		'good_id' => (int) $data->good_id
+    		);
+    	}
+    	if($data->sellType === 'izlaz'){
+		    $arr = array(
+	    		'clients_id' => $data->client_id,
+	    		'out_good'=> floatval($data->kolicina),
+	    		'out_quantity'=> floatval($data->kolicina) * (floatval($data->procenat) / 100),
+	    		'stock' => floatval($data->procenat),
+	    		'date' => date('Y-m-d', strtotime($data->datum)). ' ' . '00:00:00',
+	    		'type_of_good_id' => (int) $data->good_type_id,
+	    		'good_id' => (int) $data->good_id
+    		);
+    	}
+    	/*print_r($data->sellType);
+    	print_r($arr);/*die;*/
+    		$id = $this->model->set_values('prodaja_lager', $arr);
+    		$sql="SELECT prodaja_lager.*, DATE(`date`) AS datum FROM prodaja_lager WHERE id= :id";
+    		$result = $this->model->get_values($sql,array(':id'=>$id));
+    		header('Content-Type: application/json');
+    		echo json_encode(array('data'=>$result[0]));
+    	}
+  
 
     
  }
