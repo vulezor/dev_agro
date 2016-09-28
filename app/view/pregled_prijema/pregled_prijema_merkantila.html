@@ -566,7 +566,7 @@
             <div class="one-half push-left"><b>Tara:</b></div>
             <div class="one-half push-right text-right right-padding">{{ last_measurement.tara}} kg <i class="fa fa-balance-scale fa-fw"></i></div>
         </div>
-        <div class="cf" data-ng-show="ifKukuruz">
+        <div class="cf" data-ng-show="false">
             <div class="one-half push-left"><b>Kalo:</b></div>
             <div class="one-half push-right text-right right-padding">{{ last_measurement.kalo_rastur}} kg <i class="fa fa-balance-scale fa-fw"></i></div>
         </div>
@@ -584,34 +584,34 @@
         </div>
     </div>
 
-    <div class="one-half push-right" data-ng-hide="ifSacma">
+    <div class="one-half push-right" >
         <div class="cf">
             <div class="one-half push-left"><b>Vlaga:</b></div>
-            <div class="one-half push-right text-right right-padding" >{{ last_measurement.vlaga}} % <i class="fa fa fa-flask fa-fw"></i></div>
+            <div class="one-half push-right text-right right-padding" >{{ last_measurement.vlaga.toFixed(2)}} % <i class="fa fa fa-flask fa-fw"></i></div>
         </div>
-        <div class="cf" data-ng-hide="ifSacma">
+        <div class="cf" >
             <div class="one-half push-left"><b>Primese:</b></div>
-            <div class="one-half push-right text-right right-padding">{{ last_measurement.primese}} % <i class="fa fa fa-flask fa-fw"></i></div>
+            <div class="one-half push-right text-right right-padding">{{ last_measurement.primese.toFixed(2)}} % <i class="fa fa fa-flask fa-fw"></i></div>
         </div>
-        <div class="cf" data-ng-show="ifSacma">
+        <div class="cf" data-ng-show="ifZitarice">
             <div class="one-half push-left"><b>Hektolitar:</b></div>
-            <div class="one-half push-right text-right right-padding">{{ last_measurement.hektolitar}} % <i class="fa fa fa-flask fa-fw"></i></div>
+            <div class="one-half push-right text-right right-padding">{{ last_measurement.hektolitar.toFixed(2)}} % <i class="fa fa fa-flask fa-fw"></i></div>
         </div>
         <div class="cf" data-ng-show="ifKukuruz">
             <div class="one-half push-left"><b>Lom:</b></div>
-            <div class="one-half push-right text-right right-padding">{{ last_measurement.lom}} % <i class="fa fa fa-flask fa-fw"></i></div>
+            <div class="one-half push-right text-right right-padding">{{ last_measurement.lom.toFixed(2)}} % <i class="fa fa fa-flask fa-fw"></i></div>
         </div>
         <div class="cf" data-ng-show="ifKukuruz">
             <div class="one-half push-left"><b>Defekt:</b></div>
-            <div class="one-half push-right text-right right-padding">{{ last_measurement.defekt}} % <i class="fa fa fa-flask fa-fw"></i></div>
+            <div class="one-half push-right text-right right-padding">{{ last_measurement.defekt.toFixed(2)}} % <i class="fa fa fa-flask fa-fw"></i></div>
         </div>
         <div class="cf" data-ng-show="ifZitarice">
             <div class="one-half push-left"><b>Energija:</b></div>
-            <div class="one-half push-right text-right right-padding">{{ last_measurement.energija}} % <i class="fa fa fa-flask fa-fw"></i></div>
+            <div class="one-half push-right text-right right-padding">{{ last_measurement.energija.toFixed(2)}} % <i class="fa fa fa-flask fa-fw"></i></div>
         </div>
         <div class="cf" data-ng-show="ifZitarice">
             <div class="one-half push-left"><b>Br padanja:</b></div>
-            <div class="one-half push-right text-right right-padding">{{ last_measurement.br_padanja}} <i class="fa fa fa-flask fa-fw"></i></div>
+            <div class="one-half push-right text-right right-padding">{{ last_measurement.br_padanja.toFixed(2)}} <i class="fa fa fa-flask fa-fw"></i></div>
         </div>
     </div>
 
@@ -623,43 +623,43 @@
 <div><h4><b><u>Obracun</u></b></h4></div>
 <div class="cf">
     <div class="one-half push-left text-right"><b>Obracunska kolicina:</b></div>
-    <div class="one-squer push-left text-right">{{ last_measurement.neto }} kg <i class="fa fa-arrows-h fa-fw"></i></div>
+    <div class="one-squer push-left text-right">{{ last_measurement.neto.toFixed(3) }} kg <i class="fa fa-arrows-h fa-fw"></i></div>
     <div class="one-squer push-left">&nbsp;</div>
 </div>
 <div class="cf" data-ng-show="ifKukuruz || ifZitarice">
     <div class="one-half push-left text-right"><b>Sirov Rastur (kalo):</b></div>
-    <div class="one-squer push-left text-right">{{ last_measurement.kalo_rastur }} kg <i class="fa fa-arrows-h fa-fw"></i></div>
+    <div class="one-squer push-left text-right">{{ last_measurement.kalo_rastur.toFixed(3) }} kg <i class="fa fa-arrows-h fa-fw"></i></div>
     <div class="one-squer push-left">&nbsp;</div>
 </div>
 <div class="cf" >
     <div class="one-half push-left text-right"><b>Odbitak ili dodatak na vlagu:</b></div>
-    <div class="one-squer push-left text-right">{{ last_measurement.dnv }} kg <i class="fa fa-arrows-h fa-fw"></i></div>
+    <div class="one-squer push-left text-right">{{ last_measurement.dnv.toFixed(3)}} kg <i class="fa fa-arrows-h fa-fw"></i></div>
     <div class="one-squer push-left">&nbsp;</div>
 </div>
 <div class="cf" >
     <div class="one-half push-left text-right"><b>Odbitak ili dodatak na primese:</b></div>
-    <div class="one-squer push-left text-right">{{ last_measurement.dnp }} kg <i class="fa fa-arrows-h fa-fw"></i></div>
+    <div class="one-squer push-left text-right">{{ last_measurement.dnp.toFixed(3) }} kg <i class="fa fa-arrows-h fa-fw"></i></div>
     <div class="one-squer push-left">&nbsp;</div>
 </div>
 
 <div class="cf" data-ng-show="ifZitarice">
     <div class="one-half push-left text-right" ><b>Odbitak ili dodatak na hektolitar:</b></div>
-    <div class="one-squer push-left text-right">{{ last_measurement.dnh }} kg <i class="fa fa-arrows-h fa-fw"></i></div>
+    <div class="one-squer push-left text-right">{{ last_measurement.dnh.toFixed(3) }} kg <i class="fa fa-arrows-h fa-fw"></i></div>
     <div class="one-squer push-left">&nbsp;</div>
 </div>
 <div class="cf" data-ng-show="ifKukuruz">
     <div class="one-half push-left text-right" ><b>Odbitak ili dodatak na lom:</b></div>
-    <div class="one-squer push-left text-right">{{ last_measurement.dnl }} kg <i class="fa fa-arrows-h fa-fw"></i></div>
+    <div class="one-squer push-left text-right">{{ last_measurement.dnl.toFixed(3) }} kg <i class="fa fa-arrows-h fa-fw"></i></div>
     <div class="one-squer push-left">&nbsp;</div>
 </div>
 <div class="cf" data-ng-show="ifKukuruz">
     <div class="one-half push-left text-right"><b>Odbitak ili dodatak na defekt:</b></div>
-    <div class="one-squer push-left text-right">{{ last_measurement.dnd }} kg <i class="fa fa-arrows-h fa-fw"></i></div>
+    <div class="one-squer push-left text-right">{{ last_measurement.dnd.toFixed(3) }} kg <i class="fa fa-arrows-h fa-fw"></i></div>
     <div class="one-squer push-left">&nbsp;</div>
 </div>
 <div class="cf" >
     <div class="one-half push-left text-right" style="font-size:16px;font-weight:bolder"><b>SRPS:</b></div>
-    <div class="one-squer push-left text-right" style="font-size:16px;font-weight:bolder">{{ last_measurement.srps }} kg <i class="fa fa-arrows-h fa-fw"></i></div>
+    <div class="one-squer push-left text-right" style="font-size:16px;font-weight:bolder">{{ last_measurement.srps.toFixed(3) }} kg <i class="fa fa-arrows-h fa-fw"></i></div>
     <div class="one-squer push-left">&nbsp;</div>
 </div>
 <div class="cf" data-ng-show="ifKukuruz">
@@ -669,12 +669,12 @@
 </div>
 <div class="cf" data-ng-show="ifKukuruz">
     <div class="one-half push-left text-right"><b>Troskovi susenja:</b></div>
-    <div class="one-squer push-left text-right">{{ last_measurement.trosak_susenja }} kg <i class="fa fa-arrows-h fa-fw"></i></div>
+    <div class="one-squer push-left text-right">{{ last_measurement.trosak_susenja.toFixed(3) }} kg <i class="fa fa-arrows-h fa-fw"></i></div>
     <div class="one-squer push-left">&nbsp;</div>
 </div>
 <div class="cf" data-ng-show="ifKukuruz" >
     <div class="one-half push-left text-right" style="font-size:16px;font-weight:bolder"><b>Suvo zrno na raspolaganju:</b></div>
-    <div class="one-squer push-left text-right"><span style="font-size:16px;font-weight:bolder">{{ last_measurement.suvo_zrno }} kg</span> <i class="fa fa-arrows-h fa-fw"></i></div>
+    <div class="one-squer push-left text-right"><span style="font-size:16px;font-weight:bolder">{{ last_measurement.suvo_zrno.toFixed(3) }} kg</span> <i class="fa fa-arrows-h fa-fw"></i></div>
     <div class="one-squer push-left">&nbsp;</div>
 </div>
 
