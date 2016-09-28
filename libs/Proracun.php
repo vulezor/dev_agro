@@ -114,6 +114,10 @@ class Proracun
         $this->_calculateDnp();                     //Dobitak ili odbitak na primese
         $this->_calculateDnl();                     //Dobitak ili odbitak na lom
         $this->_calculateDnd();                     //Dobitak ili odbitak na defekt
+        $this->_dnv = round($this->_dnv);
+        $this->_dnp = round($this->_dnp);
+        $this->_dnl = round($this->_dnl);
+        $this->_dnd = round($this->_dnd);
         $this->_srps =  $this->_netox + $this->_dnp + $this->_dnl + $this->_dnd + $this->_dnv;   //proracun Srpsa
         $this->_kukuruzTrosakSusenja();             //Proracun troskova susenja
         $this->_suvoZrnoNaRaspolaganju();           //Proracun koliko ostaje suvog zrna da se plati;
@@ -164,7 +168,7 @@ class Proracun
     private function _calculateNetox(){
         $kalo = $this->_neto * $this->_kalo_koeficient;
         $this->_kalo = $kalo >= 0 ? floatval('-'.$kalo) : abs($kalo);
-        $this->_netox = $this->_neto + $this->_kalo;
+        $this->_netox = $this->_neto; //+ $this->_kalo;
     }
 
     //------------------------------------------------------------------------------------------------
@@ -345,46 +349,53 @@ class Proracun
     //------------------------------------------------------------------------------------------------
 
     private function _kukuruzTrosakSusenja(){
-        if($this->_vlaga > 14 && $this->_vlaga <= 14.50 ){$trs = ($this->_netox * $this->_a14)/100;}
-        if($this->_vlaga > 14.50 && $this->_vlaga <= 15){$trs = ($this->_netox * $this->_a14_5)/100;}
-        if($this->_vlaga > 15 && $this->_vlaga <= 15.50 ){$trs = ($this->_netox * $this->_a15)/100;}
-        if($this->_vlaga > 15.50 && $this->_vlaga <= 16){$trs = ($this->_netox * $this->_a15_5)/100;}
-        if($this->_vlaga > 16 && $this->_vlaga <= 16.50 ){$trs = ($this->_netox * $this->_a16)/100;}
-        if($this->_vlaga > 16.50 && $this->_vlaga <= 17){$trs = ($this->_netox * $this->_a16_5)/100;}
-        if($this->_vlaga > 17 && $this->_vlaga <= 17.50 ){$trs = ($this->_a17 / 100) * $this->_netox;}
-        if($this->_vlaga > 17.50 && $this->_vlaga <= 18){$trs =  ($this->_a17_5 / 100) * $this->_netox;}
-        if($this->_vlaga > 18 && $this->_vlaga <= 18.50 ){$trs = ($this->_netox * $this->_a18)/100;}
-        if($this->_vlaga > 18.50 && $this->_vlaga <= 19){$trs = ($this->_netox * $this->_a18_5)/100;}
-        if($this->_vlaga > 19 && $this->_vlaga <= 19.50 ){$trs = ($this->_netox * $this->_a19)/100;}
-        if($this->_vlaga > 19.50 && $this->_vlaga <= 20){$trs = ($this->_netox * $this->_a19_5)/100;}
-        if($this->_vlaga > 20 && $this->_vlaga <= 20.50 ){$trs = ($this->_netox * $this->_a20)/100;}
-        if($this->_vlaga > 20.50 && $this->_vlaga <= 21){$trs = ($this->_netox * $this->_a20_5)/100;}
-        if($this->_vlaga > 21 && $this->_vlaga <= 21.50 ){$trs = ($this->_netox * $this->_a21)/100;}
-        if($this->_vlaga > 21.50 && $this->_vlaga <= 22){$trs = ($this->_netox * $this->_a21_5)/100;}
-        if($this->_vlaga > 22 && $this->_vlaga <= 22.50 ){$trs = ($this->_netox * $this->_a22)/100;}
-        if($this->_vlaga > 22.50 && $this->_vlaga <= 23){$trs = ($this->_netox * $this->_a22_5)/100;}
-        if($this->_vlaga > 23 && $this->_vlaga <= 23.50 ){$trs = ($this->_netox * $this->_a23)/100;}
-        if($this->_vlaga > 23.50 && $this->_vlaga <= 24){$trs = ($this->_netox * $this->_a23_5)/100;}
-        if($this->_vlaga > 24 && $this->_vlaga <= 24.50 ){$trs = ($this->_netox * $this->_a24)/100;}
-        if($this->_vlaga > 24.50 && $this->_vlaga <= 25){$trs = ($this->_netox * $this->_a24_5)/100;}
-        if($this->_vlaga > 25 && $this->_vlaga <= 25.50 ){$trs = ($this->_netox * $this->_a25)/100;}
-        if($this->_vlaga > 25.50 && $this->_vlaga <= 26){$trs = ($this->_netox * $this->_a25_5)/100;}
-        if($this->_vlaga > 26 && $this->_vlaga <= 26.50 ){$trs = ($this->_netox * $this->_a26)/100;}
-        if($this->_vlaga > 26.50 && $this->_vlaga <= 27){$trs = ($this->_netox * $this->_a26_5)/100;}
-        if($this->_vlaga > 27 && $this->_vlaga <= 27.50 ){$trs = ($this->_netox * $this->_a27)/100;}
-        if($this->_vlaga > 27.50 && $this->_vlaga <= 28){$trs = ($this->_netox * $this->_a27_5)/100;}
-        if($this->_vlaga > 28 && $this->_vlaga <= 28.50 ){$trs = ($this->_netox * $this->_a28)/100;}
-        if($this->_vlaga > 28.50 && $this->_vlaga <= 29){$trs = ($this->_netox * $this->_a28_5)/100;}
-        if($this->_vlaga > 29 && $this->_vlaga <= 29.50 ){$trs = ($this->_netox * $this->_a29)/100;}
-        if($this->_vlaga > 29.50 && $this->_vlaga <= 30 ){$trs = ($this->_netox * $this->_a29_5)/100;}
+       // print_r($this->_netox - $this->_dnv);die;
+        if($this->_vlaga > 14 && $this->_vlaga <= 14.50 ){$trs = (($this->_netox + $this->_dnv) * $this->_a14)/100;}
+        if($this->_vlaga > 14.50 && $this->_vlaga <= 15){$trs = (($this->_netox + $this->_dnv) * $this->_a14_5)/100;}
+        if($this->_vlaga > 15 && $this->_vlaga <= 15.50 ){$trs = (($this->_netox + $this->_dnv) * $this->_a15)/100;}
+        if($this->_vlaga > 15.50 && $this->_vlaga <= 16){$trs = (($this->_netox + $this->_dnv) * $this->_a15_5)/100;}
+        if($this->_vlaga > 16 && $this->_vlaga <= 16.50 ){$trs = (($this->_netox + $this->_dnv) * $this->_a16)/100;}
+        if($this->_vlaga > 16.50 && $this->_vlaga <= 17){$trs = (($this->_netox + $this->_dnv) * $this->_a16_5)/100;}
+        if($this->_vlaga > 17 && $this->_vlaga <= 17.50 ){$trs = (($this->_netox + $this->_dnv) * $this->_a17)/100;}
+        if($this->_vlaga > 17.50 && $this->_vlaga <= 18){$trs =  (($this->_netox + $this->_dnv) * $this->_a17_5)/100;}
+        if($this->_vlaga > 18 && $this->_vlaga <= 18.50 ){$trs = (($this->_netox + $this->_dnv) * $this->_a18)/100;}
+        if($this->_vlaga > 18.50 && $this->_vlaga <= 19){$trs = (($this->_netox + $this->_dnv) * $this->_a18_5)/100;}
+        if($this->_vlaga > 19 && $this->_vlaga <= 19.50 ){$trs = (($this->_netox + $this->_dnv) * $this->_a19)/100;}
+        if($this->_vlaga > 19.50 && $this->_vlaga <= 20){$trs = (($this->_netox + $this->_dnv) * $this->_a19_5)/100;}
+        if($this->_vlaga > 20 && $this->_vlaga <= 20.50 ){$trs = (($this->_netox + $this->_dnv) * $this->_a20)/100;}
+        if($this->_vlaga > 20.50 && $this->_vlaga <= 21){$trs = (($this->_netox + $this->_dnv) * $this->_a20_5)/100;}
+        if($this->_vlaga > 21 && $this->_vlaga <= 21.50 ){$trs = (($this->_netox + $this->_dnv) * $this->_a21)/100;}
+        if($this->_vlaga > 21.50 && $this->_vlaga <= 22){$trs = (($this->_netox + $this->_dnv) * $this->_a21_5)/100;}
+        if($this->_vlaga > 22 && $this->_vlaga <= 22.50 ){$trs = (($this->_netox + $this->_dnv) * $this->_a22)/100;}
+        if($this->_vlaga > 22.50 && $this->_vlaga <= 23){$trs = (($this->_netox + $this->_dnv) * $this->_a22_5)/100;}
+        if($this->_vlaga > 23 && $this->_vlaga <= 23.50 ){$trs = (($this->_netox + $this->_dnv) * $this->_a23)/100;}
+        if($this->_vlaga > 23.50 && $this->_vlaga <= 24){$trs = (($this->_netox + $this->_dnv) * $this->_a23_5)/100;}
+        if($this->_vlaga > 24 && $this->_vlaga <= 24.50 ){$trs = (($this->_netox + $this->_dnv) * $this->_a24)/100;}
+        if($this->_vlaga > 24.50 && $this->_vlaga <= 25){$trs = (($this->_netox + $this->_dnv) * $this->_a24_5)/100;}
+        if($this->_vlaga > 25 && $this->_vlaga <= 25.50 ){$trs = (($this->_netox + $this->_dnv) * $this->_a25)/100;}
+        if($this->_vlaga > 25.50 && $this->_vlaga <= 26){$trs = (($this->_netox + $this->_dnv) * $this->_a25_5)/100;}
+        if($this->_vlaga > 26 && $this->_vlaga <= 26.50 ){$trs = (($this->_netox + $this->_dnv) * $this->_a26)/100;}
+        if($this->_vlaga > 26.50 && $this->_vlaga <= 27){$trs = (($this->_netox + $this->_dnv) * $this->_a26_5)/100;}
+        if($this->_vlaga > 27 && $this->_vlaga <= 27.50 ){$trs = (($this->_netox + $this->_dnv) * $this->_a27)/100;}
+        if($this->_vlaga > 27.50 && $this->_vlaga <= 28){$trs = (($this->_netox + $this->_dnv) * $this->_a27_5)/100;}
+        if($this->_vlaga > 28 && $this->_vlaga <= 28.50 ){$trs = (($this->_netox + $this->_dnv) * $this->_a28)/100;}
+        if($this->_vlaga > 28.50 && $this->_vlaga <= 29){$trs = (($this->_netox + $this->_dnv) * $this->_a28_5)/100;}
+        if($this->_vlaga > 29 && $this->_vlaga <= 29.50 ){$trs = (($this->_netox + $this->_dnv) * $this->_a29)/100;}
+        if($this->_vlaga > 29.50 && $this->_vlaga <= 30 ){$trs = (($this->_netox + $this->_dnv) * $this->_a29_5)/100;}
+
         if(!isset($trs)){
             $this->_trs = 0;
         }
-        $this->_trs = round($trs, 2);
+        $this->_trs = round($trs);
     }
 
     private function _suvoZrnoNaRaspolaganju(){
+        
         $suvo = $this->_srps - $this->_trs;
+
+        $kalo = $suvo * $this->_kalo_koeficient;
+        $this->_kalo = $kalo >= 0 ? floatval('-'.$kalo) : abs($kalo);
+        $suvo = $suvo + $this->_kalo;
         $this->_suvo_zrno = round($suvo,2);
     }
 
